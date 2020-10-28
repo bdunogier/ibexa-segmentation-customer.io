@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Ibexa\SegmentationCustomerIo\Segmentation\:
+        resource: '../../../Segmentation/*'
+
+    Ibexa\SegmentationCustomerIo\Segmentation\CustomerIoSegmentationService: ~
+
+    Ibexa\Platform\Contracts\Segmentation\SegmentationServiceInterface: '@Ibexa\SegmentationCustomerIo\Segmentation\CustomerIoSegmentationService'

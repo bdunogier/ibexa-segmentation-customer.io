@@ -1,0 +1,14 @@
+http_client:
+    scoped_clients:
+        customer_io_beta.http_client:
+            scope: 'https://beta\-api\.customer\.io'
+            auth_bearer: '%env(CUSTOMER_IO_API_KEY)'
+            headers:
+                Content-Type: application/json
+                Accept: application/json
+        customer_io_track.http_client:
+            scope: 'https://track\.customer\.io'
+            auth_basic: '%env(CUSTOMER_IO_TRACKING_CREDENTIALS)%'
+            headers:
+                Content-Type: application/json
+                Accept: application/json
