@@ -1,0 +1,13 @@
+{
+    "name": "bdunogier/ibexa-segmentation-customer.io",
+    "description": "Customer.io support for Ibexa DXP segmentation feature",
+    "type": "ezplatform-bundle",
+    "authors": [
+        {
+            "name": "Bertrand Dunogier",
+            "email": "bertrand.dunogier@ez.no"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
