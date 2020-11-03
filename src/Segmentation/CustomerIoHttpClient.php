@@ -6,6 +6,8 @@
 
 namespace Ibexa\SegmentationCustomerIo\Segmentation;
 
+use Symfony\Component\HttpClient\Exception\ClientException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CustomerIoHttpClient
@@ -80,7 +82,6 @@ class CustomerIoHttpClient
 
         $return = $this->httpClient->request('GET', $url)->toArray()['segment'];
 
-        print_r($return);
         return $return;
     }
 }
