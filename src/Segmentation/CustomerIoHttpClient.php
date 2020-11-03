@@ -30,9 +30,11 @@ class CustomerIoHttpClient
 
     public function getSegments(): array
     {
-        return $this->httpClient
-            ->request('GET', 'https://beta-api.customer.io/v1/api/segments')
-            ->toArray()['segments'];
+        try {
+            return $this->httpClient->request('GET', 'https://beta-api.customer.io/v1/api/segments')->toArray()['segments'];
+        } catch (ClientException $e) {
+            return [];
+        }
     }
 
     public function deleteSegment($segmentId)
@@ -64,16 +66,26 @@ class CustomerIoHttpClient
     {
         $url = sprintf('https://track.customer.io/api/v1/segments/%s/remove_customers', $segmentId);
 
-        $this->trackHttpClient->request('POST', $url, [
-            'json' => ['ids' => [$email]]
-        ]);
+        try {
+            $this->trackHttpClient->request('POST', $url, [
+                'json' => ['ids' => [$email]]
+            ]);
+        } catch (ClientException $e) {
+            return;
+        }
     }
 
     public function loadSegmentsAssignedToUser(string $email): array
     {
         $url = sprintf('https://beta-api.customer.io/v1/api/customers/%s/segments', urlencode($email));
 
-        return $this->httpClient->request('GET', $url )->toArray()['segments'];
+        $response = $this->httpClient->request('GET', $url);
+
+        try {
+            return $response->toArray()['segments'];
+        } catch (ClientException $e) {
+            return [];
+        }
     }
 
     public function loadSegment(int $segmentId)

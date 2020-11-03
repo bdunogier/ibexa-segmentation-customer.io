@@ -2,7 +2,7 @@ http_client:
     scoped_clients:
         customer_io_beta.http_client:
             scope: 'https://beta\-api\.customer\.io'
-            auth_bearer: '%env(CUSTOMER_IO_API_KEY)'
+            auth_bearer: '%env(CUSTOMER_IO_API_KEY)%'
             headers:
                 Content-Type: application/json
                 Accept: application/json
