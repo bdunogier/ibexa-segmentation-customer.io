@@ -143,7 +143,7 @@ class CustomerIoSegmentationService implements SegmentationServiceInterface
             function($row) {
                 return $this->buildSegment($row);
             },
-            $this->client->loadSegmentsAssignedToUser($user->email)
+            $this->client->loadSegmentsAssignedToUser($user->id)
         );
     }
 
@@ -162,12 +162,12 @@ class CustomerIoSegmentationService implements SegmentationServiceInterface
 
     public function assignUserToSegment(User $user, Segment $segment): void
     {
-        $this->client->assignUserToSegment($user->email, $segment->id);
+        $this->client->assignUserToSegment($user->id, $segment->id);
     }
 
     public function unassignUserFromSegment(User $user, Segment $segment): void
     {
-        $this->client->unassignUserFromSegment($user->email, $segment->id);
+        $this->client->unassignUserFromSegment($user->id, $segment->id);
     }
 
     private function buildSegmentGroup()

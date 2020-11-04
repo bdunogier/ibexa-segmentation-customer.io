@@ -53,31 +53,31 @@ class CustomerIoHttpClient
         ])->toArray()['segment'];
     }
 
-    public function assignUserToSegment(string $email, int $segmentId): void
+    public function assignUserToSegment(int $userId, int $segmentId): void
     {
         $url = sprintf('https://track.customer.io/api/v1/segments/%s/add_customers', $segmentId);
 
         $this->trackHttpClient->request('POST', $url, [
-            'json' => ['ids' => [$email]]
+            'json' => ['ids' => [$userId]]
         ]);
     }
 
-    public function unassignUserFromSegment(string $email, int $segmentId): void
+    public function unassignUserFromSegment(int $userId, int $segmentId): void
     {
         $url = sprintf('https://track.customer.io/api/v1/segments/%s/remove_customers', $segmentId);
 
         try {
             $this->trackHttpClient->request('POST', $url, [
-                'json' => ['ids' => [$email]]
+                'json' => ['ids' => [$userId]]
             ]);
         } catch (ClientException $e) {
             return;
         }
     }
 
-    public function loadSegmentsAssignedToUser(string $email): array
+    public function loadSegmentsAssignedToUser(int $id): array
     {
-        $url = sprintf('https://beta-api.customer.io/v1/api/customers/%s/segments', urlencode($email));
+        $url = sprintf('https://beta-api.customer.io/v1/api/customers/%d/segments', urlencode($id));
 
         $response = $this->httpClient->request('GET', $url);
 
