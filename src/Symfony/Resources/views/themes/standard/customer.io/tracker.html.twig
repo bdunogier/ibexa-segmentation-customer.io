@@ -1,0 +1,35 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <script type="text/javascript">
+        var _cio = _cio || [];
+        (function() {
+            var a,b,c;a=function(f){return function(){_cio.push([f].
+            concat(Array.prototype.slice.call(arguments,0)))}};b=["load","identify",
+                "sidentify","track","page"];for(c=0;c<b.length;c++){_cio[b[c]]=a(b[c])};
+            var t = document.createElement('script'),
+                s = document.getElementsByTagName('script')[0];
+            t.async = true;
+            t.id    = 'cio-tracker';
+            t.setAttribute('data-site-id', '{{ siteId|e('js') }}');
+            t.src = 'https://assets.customer.io/assets/track.js';
+            s.parentNode.insertBefore(t, s);
+        })();
+    </script>
+
+    <script type="text/javascript">
+        {% if customAttributes is not defined %}
+            {% set customAttributes = [] %}
+        {% endif %}
+
+        {% set attributes = {
+            id: app.user.APIUserReference.userId,
+            email: app.user.APIUser.email,
+            created_at: app.user.APIUser.contentInfo.publishedDate.getTimestamp(),
+        }|merge(customAttributes) %}
+
+        _cio.identify({
+            {% for attributeName, attributeValue in attributes %}
+                {{ attributeName }}: '{{ attributeValue|e('js') }}'{% if not loop.last %},{% endif %}
+            {% endfor %}
+        });
+    </script>
+{% endif %}
