@@ -29,8 +29,15 @@ final class IbexaSegmentationCustomerIoExtension extends Extension implements Pr
     public function prepend(ContainerBuilder $container)
     {
         $this->prependFrameworkConfig($container);
+        $this->prependTwigConfig($container);
     }
 
+    private function prependTwigConfig(ContainerBuilder $container)
+    {
+        $container->prependExtensionConfig('twig', [
+            'globals' => ['cio_site_id' => '%env(CUSTOMER_IO_TRACKING_SITE_ID)%']
+        ]);
+    }
     private function prependFrameworkConfig(ContainerBuilder $container)
     {
         $configFile = __DIR__ . '/../Resources/config/framework.yaml';
